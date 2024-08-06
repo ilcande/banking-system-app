@@ -1,0 +1,36 @@
+node_modules/
+dist/
+.env
+.DS_Store
+.idea
+.vscode
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Client
+
+client/node_modules/
+client/build/
+client/.env
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+client/.DS_Store
+client/coverage/
+
+# Server
+
+server/node_modules/
+server/dist/
+server/.env
+server/coverage/
+
+# Miscellaneous
+
+*.log
+*.lock
+*.cache
+*.tmp
+“ > .gitignore
