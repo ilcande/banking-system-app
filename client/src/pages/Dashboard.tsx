@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
+import CreateAccountModal from '../components/accounts/CreateAccountModal';
+
 interface User {
   username: string;
   email: string;
@@ -10,6 +12,7 @@ interface User {
 
 const Dashboard: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,13 +47,11 @@ const Dashboard: React.FC = () => {
   };
 
   const handleCreateAccount = () => {
-    // Implement create accounts functionality or redirect if needed
-    toast.info('Create Accounts functionality not implemented yet');
+    setIsModalOpen(true);
   };
 
   const handleViewAccounts = () => {
-    // Implement view accounts functionality or redirect if needed
-    toast.info('View Accounts functionality not implemented yet');
+    navigate('/view-accounts');
   };
 
   if (!user) {
@@ -81,6 +82,7 @@ const Dashboard: React.FC = () => {
           Logout
         </button>
       </div>
+      <CreateAccountModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };

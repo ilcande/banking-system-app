@@ -10,15 +10,18 @@ export async function createAccount({
   balance,
   currency,
   userId,
-}: CreateAccountParams): Promise<void> {
+}: CreateAccountParams): Promise<any> {
   try {
     const query = `
       INSERT INTO accounts (account_number, type, balance, currency, user_id)
       VALUES ($1, $2, $3, $4, $5)
+      RETURNING account_id, account_number, type, balance, currency
     `;
 
-    await client.query(query, [accountNumber, type, balance, currency, userId]);
+    const result = await client.query(query, [accountNumber, type, balance, currency, userId]);
+
     console.log('Account created successfully');
+    return result.rows[0]; // Return the newly created account with all properties
   } catch (error) {
     console.error('Error creating account:', error);
     throw new Error('Failed to create account');
@@ -95,5 +98,19 @@ export async function findAccountById(account_id: number): Promise<any> {
   } catch (error) {
     console.error('Error finding account by id:', error);
     throw new Error('Failed to find account by id');
+  }
+}
+
+// Async function to find an account by account number
+export async function findAccountsByUserId(user_id: number): Promise<any[]> {
+  try {
+    const result = await client.query(
+      `SELECT * FROM accounts WHERE user_id = $1`,
+      [user_id]
+    );
+    return result.rows;
+  } catch (error) {
+    console.error('Error finding accounts by user id:', error);
+    throw new Error('Failed to find accounts by user id');
   }
 }

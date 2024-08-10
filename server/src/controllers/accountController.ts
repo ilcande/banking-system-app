@@ -1,7 +1,7 @@
 // src/controllers/accountController.ts
 import { Request, Response } from 'express';
 import { registerAccountService, updateAccountService, deleteAccountService } from '../services/accountServices';
-import { findAccountById } from '../models/accountModel';
+import { findAccountById, findAccountsByUserId } from '../models/accountModel';
 import { UpdateAccountParams } from '../interfaces/accounts/UpdateAccountParams';
 
 export async function registerAccountController(req: Request, res: Response): Promise<void> {
@@ -14,9 +14,9 @@ export async function registerAccountController(req: Request, res: Response): Pr
     }
 
     const { type, balance, currency } = req.body;
-    await registerAccountService({ userId, type, balance, currency });
+    const account = await registerAccountService({ userId, type, balance, currency });
 
-    res.status(201).json({ message: 'Account created successfully' });
+    res.status(201).json({ message: 'Account created successfully', account });
   } catch (error: any) {
     console.error('Error in registerAccountController:', error); // Detailed logging
     res.status(500).json({ message: 'Failed to create account', error: error.message });
@@ -71,5 +71,22 @@ export async function deleteAccountController(req: Request, res: Response): Prom
   } catch (error: any) {
     console.error('Error in deleteAccountController:', error);
     res.status(500).json({ message: 'Failed to delete account', error: error.message });
+  }
+}
+
+export async function fetchAccountsController(req: Request, res: Response): Promise<void> {
+  try {
+    const userId = (req as any).user?.userId; // Type assertion to any to access user property
+    if (!userId) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
+
+    // Fetch accounts from the database
+    const accounts = await findAccountsByUserId(userId);
+    res.json(accounts);
+  } catch (error: any) {
+    console.error('Error in fetchAccountsController:', error);
+    res.status(500).json({ message: 'Failed to get accounts', error: error.message });
   }
 }

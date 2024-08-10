@@ -10,16 +10,17 @@ export async function registerAccountService({
   type,
   balance = 0,
   currency = 'EUR',
-}: RegisterAccountParams): Promise<void> {
+}: RegisterAccountParams): Promise<any> {
   try {
     const accountNumber = await getUniqueAccountNumber(); // Generate a unique account number
-    await createAccount({
+    const newAccount = await createAccount({
       accountNumber,
       type,
       balance,
       currency,
       userId,
     }); // Store the account in the database
+    return newAccount; // Return the newly created account with all properties
   } catch (error: any) {
     console.error('Error in registerAccountService service:', error); // Detailed logging
     throw new Error('Failed to create account');

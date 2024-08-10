@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { ToastContainer } from 'react-toastify';
 import './styles/tailwind.css'; // Import the Tailwind CSS
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for react-toastify
+import '@fortawesome/fontawesome-free/css/all.min.css'; // Import the CSS for Font Awesome
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
