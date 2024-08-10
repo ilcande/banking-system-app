@@ -24,7 +24,7 @@ export async function loginController(req: Request, res: Response): Promise<void
 }
 
 // Controller action to fetch the logged-in user's details
-export async function getUserDetails(req: Request, res: Response): Promise<void> {
+export async function fetchUserController(req: Request, res: Response): Promise<void> {
   try {
     // Extract user ID from request object set by the authentication middleware
     const userId = (req as any).user?.userId; // Type assertion to any to access user property
@@ -48,7 +48,7 @@ export async function getUserDetails(req: Request, res: Response): Promise<void>
       email: user.email,
     });
   } catch (error) {
-    console.error('Error in getUserDetails controller:', error);
+    console.error('Error in fetchUserController controller:', error);
     res.status(500).json({ message: 'Failed to get user details' });
   }
 }

@@ -1,10 +1,5 @@
 const client = require('../config/database');
-
-interface CreateUserParams {
-  username: string;
-  email: string;
-  passwordHash: string;
-}
+import { CreateUserParams } from '../interfaces/users/CreateUserParams';
 
 // Async function to create a new user
 export async function createUser({ username, email, passwordHash }: CreateUserParams): Promise<void> {
