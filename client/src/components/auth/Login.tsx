@@ -15,7 +15,7 @@ const Login: React.FC = () => {
       const response = await axios.post('http://localhost:4242/auth/login', { email, password });
       localStorage.setItem('token', response.data.token);
       toast.success('Login successful!'); // Show success toast message
-      navigate('/dashboard');
+      navigate('/dashboard'); // Redirect to dashboard
     } catch (err) {
       toast.error('Invalid credentials'); // Show error toast
       setError('Invalid email or password');

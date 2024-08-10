@@ -4,6 +4,7 @@ import cors from 'cors'; // Import cors middleware
 
 // Import routes
 import authRoutes from './routes/authRoutes'; // authentication routes
+import accountRoutes from './routes/accountRoutes'; // account routes
 
 const client = require('./config/database');
 dotenv.config(); // Load environment variables from .env file
@@ -25,6 +26,9 @@ app.use(express.json());
 
 // Use authentication routes
 app.use('/auth', authRoutes);
+
+// Use account routes
+app.use('/accounts', accountRoutes);
 
 // Define other routes, e.g., home route
 app.get('/', (_req, res) => {

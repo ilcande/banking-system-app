@@ -15,25 +15,27 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem('token');
-
-      if (token) {
-        try {
-          const response = await axios.get('http://localhost:4242/auth/me', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setUser(response.data);
-        } catch (err) {
-          toast.error('Failed to fetch user data');
-        }
-      } else {
+  
+      if (!token) {
+        navigate('/login');
+        return;
+      }
+  
+      try {
+        const response = await axios.get('http://localhost:4242/auth/me', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUser(response.data);
+      } catch (err) {
+        toast.error('Failed to fetch user data');
         navigate('/login');
       }
     };
-
+  
     fetchUser();
-  }, [navigate]);
+  }, [navigate]);  // Only `navigate` should be here
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -51,14 +53,14 @@ const Dashboard: React.FC = () => {
     toast.info('View Accounts functionality not implemented yet');
   };
 
+  if (!user) {
+    return <div>Loading...</div>; // Show loading state while fetching user data
+  }
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white p-4">
       <h1 className="text-4xl font-bold mb-4">Dashboard</h1>
-      {user ? (
-        <p className="text-xl mb-6">Welcome, {user.username}!</p>
-      ) : (
-        <p className="text-xl mb-6">Loading...</p>
-      )}
+      <p className="text-xl mb-6">Welcome, {user.username}!</p>
       <div className="flex flex-col space-y-4 w-full max-w-xs">
         <button
           onClick={handleCreateAccount}

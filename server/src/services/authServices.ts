@@ -1,18 +1,10 @@
 import bcrypt from 'bcrypt';
 import { createUser } from '../models/userModel';
 import { generateToken, verifyToken } from '../utils/authUtils'; // Import the utility functions
-const client = require('../config/database'); // Make sure to use the correct path
-
-interface RegisterParams {
-  username: string;
-  email: string;
-  password: string;
-}
-
-interface LoginParams {
-  email: string;
-  password: string;
-}
+import { Request, Response, NextFunction } from 'express';
+const client = require('../config/database');
+import { LoginParams } from '../interfaces/auth/LoginParams';
+import { RegisterParams } from '../interfaces/auth/RegisterParams';
 
 // Registration service
 export async function register({ username, email, password }: RegisterParams): Promise<void> {
@@ -51,12 +43,26 @@ export async function login({ email, password }: LoginParams): Promise<string> {
 }
 
 // Middleware to authenticate requests
-export async function authenticate(req: any, res: any, next: any): Promise<void> {
+export async function authenticate(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const token = req.headers.authorization?.split(' ')[1]; // Extract the token
-    const decoded = verifyToken(token); // Verify the token
+    const authHeader = req.headers.authorization;
 
-    req.user = decoded; // Attach the user object to the request
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
+
+    // Extract token and remove 'Bearer ' prefix
+    const token = authHeader.substring(7).trim();
+
+    if (!token) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
+
+    const decoded = verifyToken(token);
+    (req as any).user = decoded; // Set the decoded token in the request object
+
     next();
   } catch (error: any) {
     console.error('Authentication error:', error.message);
