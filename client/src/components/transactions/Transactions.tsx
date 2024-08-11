@@ -15,7 +15,33 @@ interface Transaction {
 const Transactions: React.FC = () => {
   const { accountId } = useParams<{ accountId: string }>();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+  const [year, setYear] = useState<number>(new Date().getFullYear());
   const navigate = useNavigate();
+
+  const handleDownloadStatement = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(
+        `http://localhost:4242/transactions/accounts/${accountId}/statement/${month}/${year}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          responseType: 'blob',
+        }
+      );
+      
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `statement_${accountId}_${month}_${year}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      toast.error('Failed to download statement');
+    }
+  };
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -30,6 +56,8 @@ const Transactions: React.FC = () => {
         toast.error('Invalid account ID');
         return;
       }
+
+      console.log('Fetching transactions for account:', accountId);
 
       try {
         const response = await axios.get(
@@ -57,6 +85,50 @@ const Transactions: React.FC = () => {
   return (
     <div className="flex flex-col items-center p-6 bg-gray-900 text-white min-h-screen">
       <h1 className="text-4xl font-bold mb-4">Transactions</h1>
+
+      <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-3xl">
+        {/* Statement Download Section */}
+        <div className="flex flex-col gap-4 mt-6">
+          <div className="flex justify-around">
+            <div className="flex flex-col">
+              <label className="block mb-2">Select Month:</label>
+              <select
+                value={month}
+                onChange={(e) => setMonth(Number(e.target.value))}
+                className="p-2 rounded bg-gray-700 text-white"
+              >
+                {Array.from({ length: 12 }, (_, i) => (
+                  <option key={i + 1} value={i + 1}>
+                    {new Date(0, i).toLocaleString('default', { month: 'long' })}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex flex-col">
+              <label className="block mb-2">Select Year:</label>
+              <select
+                value={year}
+                onChange={(e) => setYear(Number(e.target.value))}
+                className="p-2 rounded bg-gray-700 text-white"
+              >
+                {Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - i).map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <button
+            onClick={handleDownloadStatement}
+            className="bg-white text-gray-900 font-bold py-2 px-4 rounded hover:bg-gray-300"
+          >
+            Download Statement as PDF
+          </button>
+        </div>
+      </div>
       
       <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-3xl">
         {transactions.map(transaction => (
