@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt';
 import { createUser } from '../models/userModel';
-import { generateToken, verifyToken } from '../utils/authUtils'; // Import the utility functions
-import { Request, Response, NextFunction } from 'express';
+import { generateToken } from '../utils/authUtils'; // Import the utility functions
 const client = require('../config/database');
 import { LoginParams } from '../interfaces/auth/LoginParams';
 import { RegisterParams } from '../interfaces/auth/RegisterParams';
@@ -39,33 +38,5 @@ export async function login({ email, password }: LoginParams): Promise<string> {
   } catch (error: any) {
     console.error('Login error:', error.message);
     throw new Error('Failed to login');
-  }
-}
-
-// Middleware to authenticate requests
-export async function authenticate(req: Request, res: Response, next: NextFunction): Promise<void> {
-  try {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      res.status(401).json({ message: 'Unauthorized' });
-      return;
-    }
-
-    // Extract token and remove 'Bearer ' prefix
-    const token = authHeader.substring(7).trim();
-
-    if (!token) {
-      res.status(401).json({ message: 'Unauthorized' });
-      return;
-    }
-
-    const decoded = verifyToken(token);
-    (req as any).user = decoded; // Set the decoded token in the request object
-
-    next();
-  } catch (error: any) {
-    console.error('Authentication error:', error.message);
-    res.status(401).json({ message: 'Unauthorized' });
   }
 }
