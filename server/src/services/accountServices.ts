@@ -1,6 +1,12 @@
 // src/services/accountService.ts
 import { getUniqueAccountNumber } from './accountNumberServices';
-import { createAccount, updateAccount, deleteAccount } from '../models/accountModel';
+import {
+  createAccount,
+  updateAccount,
+  deleteAccount,
+  findAccountById,
+  updateAccountBalanceInDB
+} from '../models/accountModel';
 import { RegisterAccountParams } from '../interfaces/accounts/RegisterAccountParams';
 import { UpdateAccountParams } from '../interfaces/accounts/UpdateAccountParams';
 
@@ -50,5 +56,31 @@ export async function deleteAccountService({ accountId }: { accountId: number })
   } catch (error: any) {
     console.error('Error in deleteAccountService:', error);
     throw new Error('Failed to delete account');
+  }
+}
+
+// Update the account balance
+export async function updateAccountBalanceService(accountId: number, amount: number, client:any): Promise<void> {
+  try {
+    // Fetch the current account
+    const account = await findAccountById(accountId);
+    if (!account) {
+      throw new Error('Account not found');
+    }
+
+    // Avoid floating-point issues
+    const currentBalance = Math.round(account.balance * 100);
+    const amountToUpdate = Math.round(amount * 100);
+
+    // Calculate the new balance
+    const newBalance = (currentBalance + amountToUpdate) / 100;
+
+    // Update the balance only
+    await updateAccountBalanceInDB(accountId, newBalance, client);
+
+    console.log('Account balance updated successfully');
+  } catch (error: any) {
+    console.error('Error in updateAccountBalanceService:', error);
+    throw new Error('Failed to update account balance');
   }
 }

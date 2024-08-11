@@ -6,6 +6,7 @@ import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import AccountDetails from './components/accounts/AccountDetails';
 import Accounts from './components/accounts/Accounts';
+import Transactions from './components/transactions/Transactions';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/view-accounts" element={<Accounts />} />
         <Route path="/accounts/:accountId" element={<AccountDetails />} />
+        <Route path="/accounts/:accountId/transactions" element={<Transactions />} />
       </Routes>
     </Router>
   );
