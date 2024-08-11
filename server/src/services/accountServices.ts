@@ -80,7 +80,7 @@ export async function updateAccountBalanceService(accountId: number, amount: num
 
     console.log('Account balance updated successfully');
   } catch (error: any) {
-    console.error('Error in updateAccountBalanceService:', error);
+    console.log('Error in updateAccountBalanceService:', error);
     throw new Error('Failed to update account balance');
   }
 }

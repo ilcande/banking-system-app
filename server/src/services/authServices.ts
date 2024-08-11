@@ -11,7 +11,7 @@ export async function register({ username, email, password }: RegisterParams): P
     const passwordHash = await bcrypt.hash(password, 10); // Hash the password
     await createUser({ username, email, passwordHash }); // Store the user in the database
   } catch (error: any) {
-    console.error('Error in register service:', error); // Detailed logging
+    console.log('Error in register service:', error); // Detailed logging
     throw new Error('Failed to register user');
   }
 }
@@ -36,7 +36,7 @@ export async function login({ email, password }: LoginParams): Promise<string> {
 
     return token;
   } catch (error: any) {
-    console.error('Login error:', error.message);
+    console.log('Login error:', error.message);
     throw new Error('Failed to login');
   }
 }

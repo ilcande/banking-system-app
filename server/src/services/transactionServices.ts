@@ -24,7 +24,7 @@ export async function deposit(accountId: number, amount: number): Promise<any> {
     return transaction;
   } catch (error) {
     await client.query('ROLLBACK'); // Rollback the transaction on error
-    console.error('Deposit error:', error);
+    console.log('Deposit error:', error);
     throw new Error('Deposit failed');
   }
 }
@@ -48,7 +48,7 @@ export async function withdraw(accountId: number, amount: number): Promise<any> 
     return transaction;
   } catch (error) {
     await client.query('ROLLBACK');
-    console.error('Withdrawal error:', error);
+    console.log('Withdrawal error:', error);
     throw new Error('Withdrawal failed');
   }
 }
@@ -90,7 +90,7 @@ export async function transfer(fromAccountId: number, toAccountId: number, amoun
     return { sourceTransaction, targetTransaction };
   } catch (error) {
     await client.query('ROLLBACK');
-    console.error('Transfer error:', error);
+    console.log('Transfer error:', error);
     throw new Error('Transfer failed');
   }
 }

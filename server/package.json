@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "migrate": "node-pg-migrate -f migration-config.js -j ts"
   },
   "keywords": [],
@@ -30,11 +30,17 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/express-validator": "^3.0.0",
+    "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^22.1.0",
     "@types/pg": "^8.11.6",
+    "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
+    "jest": "^29.7.0",
+    "jest-mock": "^29.7.0",
     "nodemon": "^3.1.4",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   }
