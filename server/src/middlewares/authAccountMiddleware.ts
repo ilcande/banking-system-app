@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { findAccountById } from '../models/accountModel';
 
 export async function authorizeAccountAccess(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const { id } = req.params;
+  const { id, accountId = null } = req.params;
   const userId = (req as any).user?.userId; // Ensure this matches the JWT payload
 
   if (!userId) {
@@ -11,7 +11,8 @@ export async function authorizeAccountAccess(req: Request, res: Response, next: 
   }
 
   try {
-    const account = await findAccountById(Number(id));
+    const newId = accountId ? accountId : id;
+    const account = await findAccountById(Number(newId));
     
     if (account && account.user_id === userId) {
       next(); // User is authorized

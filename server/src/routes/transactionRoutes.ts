@@ -7,6 +7,7 @@ import {
   transferController,
   fetchTransactionsController,
 } from '../controllers/transactionController';
+import { generateStatementController } from '../controllers/statementController';
 import { validateTransactionInput } from '../middlewares/transactionValidationMiddleware';
 import { authorizeAccountAccess } from '../middlewares/authAccountMiddleware';
 import { authTokenMiddleware } from '../middlewares/authTokenMiddleware';
@@ -23,5 +24,8 @@ router.post('/transfer', validateTransactionInput, transferController);
 
 // Route for fetching transactions by account ID
 router.get('/accounts/:accountId/all', authTokenMiddleware, authorizeAccountAccess, fetchTransactionsController);
+
+// Route to generate and download a monthly statement
+router.get('/accounts/:accountId/statement/:month/:year', authTokenMiddleware, authorizeAccountAccess, generateStatementController);
 
 export default router;

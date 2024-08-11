@@ -28,4 +28,16 @@ export async function fetchTransactionsByAccountId(accountId: number): Promise<C
   return result.rows;
 }
 
+export async function findTransactionsByAccountAndDate(accountId: number, month: number, year: number): Promise<CreateTransactionParams[]> {
+  const query = `
+    SELECT * FROM transactions
+    WHERE account_id = $1
+    AND EXTRACT(MONTH FROM date) = $2
+    AND EXTRACT(YEAR FROM date) = $3
+    ORDER BY date DESC;
+  `;
+  const result = await client.query(query, [accountId, month, year]);
+  return result.rows;
+}
+
 
