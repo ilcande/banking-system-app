@@ -1,6 +1,6 @@
 import express from 'express';
 import { registerController, loginController, fetchUserController } from '../controllers/authController';
-import { authenticate } from '../services/authServices';
+import { authTokenMiddleware } from '../middlewares/authTokenMiddleware';
 
 const router = express.Router();
 
@@ -11,6 +11,6 @@ router.post('/register', registerController);
 router.post('/login', loginController);
 
 // route to fetch logged in user
-router.get('/me', authenticate, fetchUserController);
+router.get('/me', authTokenMiddleware, fetchUserController);
 
 export default router;

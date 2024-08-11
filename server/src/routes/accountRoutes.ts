@@ -1,4 +1,3 @@
-// src/routes/accountRoutes.ts
 import express from 'express';
 import {
   registerAccountController,
@@ -7,23 +6,24 @@ import {
   updateAccountController,
   deleteAccountController
 } from '../controllers/accountController';
-import { authenticate } from '../services/authServices';
+import { authTokenMiddleware } from '../middlewares/authTokenMiddleware';
+import { authorizeAccountAccess } from '../middlewares/authAccountMiddleware';
 
 const router = express.Router();
 
-// Route for creating an account
-router.post('/new', authenticate, registerAccountController);
+// Route for creating an account (only auth is needed)
+router.post('/new', authTokenMiddleware, registerAccountController);
 
-// Route for fetching an account by ID
-router.get('/:id', authenticate, fetchAccountController);
+// Route for fetching an account by ID (auth + authorization)
+router.get('/:id', authTokenMiddleware, authorizeAccountAccess, fetchAccountController);
 
-// Route for fetching all accounts
-router.get('/', authenticate, fetchAccountsController);
+// Route for fetching all accounts (only auth is needed)
+router.get('/', authTokenMiddleware, fetchAccountsController);
 
-// Route to update an account
-router.patch('/:id', authenticate, updateAccountController);
+// Route to update an account (auth + authorization)
+router.patch('/:id', authTokenMiddleware, authorizeAccountAccess, updateAccountController);
 
-// Route to delete an account by ID
-router.delete('/:id', authenticate, deleteAccountController);
+// Route to delete an account by ID (auth + authorization)
+router.delete('/:id', authTokenMiddleware, authorizeAccountAccess, deleteAccountController);
 
 export default router;

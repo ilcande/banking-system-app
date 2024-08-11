@@ -26,8 +26,6 @@ const Transactions: React.FC = () => {
         return;
       }
 
-      console.log('accountId:', accountId);
-
       if (!accountId) {
         toast.error('Invalid account ID');
         return;
