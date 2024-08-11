@@ -5,10 +5,6 @@ export async function authorizeAccountAccess(req: Request, res: Response, next: 
   const { id } = req.params;
   const userId = (req as any).user?.userId; // Ensure this matches the JWT payload
 
-  console.log('accountId', id);
-  console.log('userId', userId);
-  console.log('req.params', req.params);;
-
   if (!userId) {
     res.status(401).json({ message: 'Unauthorized' });
     return;

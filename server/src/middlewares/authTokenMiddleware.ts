@@ -19,9 +19,6 @@ export async function authTokenMiddleware(req: Request, res: Response, next: Nex
 
     (req as any).user = decoded; // Attach user information to request object
 
-    console.log('Decoded token:', decoded);
-    console.log('params:', req.params);
-
     next();
   } catch (error: any) {
     console.error('Authentication error:', error.message);
