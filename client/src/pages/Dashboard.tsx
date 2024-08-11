@@ -73,7 +73,7 @@ const Dashboard: React.FC = () => {
           onClick={handleViewAccounts}
           className="w-full bg-white text-gray-900 font-bold py-2 px-4 rounded hover:bg-gray-300"
         >
-          View Accounts
+          View Your Accounts
         </button>
         <button
           onClick={handleLogout}

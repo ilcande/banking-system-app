@@ -114,3 +114,20 @@ export async function findAccountsByUserId(user_id: number): Promise<any[]> {
     throw new Error('Failed to find accounts by user id');
   }
 }
+
+// Async function to update the account balance in the database
+export async function updateAccountBalanceInDB(accountId: number, balance: number, client: any): Promise<void> {
+  try {
+    const query = `
+      UPDATE accounts 
+      SET balance = $1, updated_at = CURRENT_TIMESTAMP
+      WHERE account_id = $2
+    `;
+
+    await client.query(query, [balance, accountId]);
+    console.log('Balance updated in DB successfully');
+  } catch (error) {
+    console.error('Error updating account balance in DB:', error);
+    throw new Error('Failed to update account balance in DB');
+  }
+}
