@@ -40,7 +40,7 @@ const AccountDetails: React.FC = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:4242/accounts/${accountId}`,
+          `http://localhost:4242/api/accounts/${accountId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -64,7 +64,7 @@ const AccountDetails: React.FC = () => {
 
       try {
         const response = await axios.get(
-          'http://localhost:4242/accounts',
+          'http://localhost:4242/api/accounts',
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -93,7 +93,7 @@ const AccountDetails: React.FC = () => {
   
     try {
       await axios.post(
-        `http://localhost:4242/transactions/deposit`,
+        `http://localhost:4242/api/transactions/deposit`,
         {
           accountId: parseInt(accountId!, 10),
           amount,
@@ -144,7 +144,7 @@ const AccountDetails: React.FC = () => {
   
     try {
       await axios.post(
-        `http://localhost:4242/transactions/withdraw`,
+        `http://localhost:4242/api/transactions/withdraw`,
         {
           accountId: parseInt(accountId!, 10),
           amount,
@@ -195,7 +195,7 @@ const AccountDetails: React.FC = () => {
   
     try {
       await axios.post(
-        `http://localhost:4242/transactions/transfer`,
+        `http://localhost:4242/api/transactions/transfer`,
         {
           fromAccountId: parseInt(accountId!, 10),
           toAccountId: targetAccountId,

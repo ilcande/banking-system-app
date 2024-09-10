@@ -25,7 +25,7 @@ const Dashboard: React.FC = () => {
       }
   
       try {
-        const response = await axios.get('http://localhost:4242/auth/me', {
+        const response = await axios.get('http://localhost:4242/api/auth/me', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

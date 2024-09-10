@@ -26,13 +26,13 @@ app.use(cors()); // Enable CORS
 app.use(express.json());
 
 // Use authentication routes
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 
 // Use account routes
-app.use('/accounts', accountRoutes);
+app.use('/api/accounts', accountRoutes);
 
 // Use transaction routes
-app.use('/transactions', transactionRoutes);
+app.use('/api/transactions', transactionRoutes);
 
 // Define other routes, e.g., home route
 app.get('/', (_req, res) => {

@@ -24,7 +24,7 @@ const mockAuthorizeAccountAccess = (req: any, res: any, next: () => void) => {
 };
 
 // Use mocked middlewares
-app.use('/transactions', mockAuthTokenMiddleware, mockAuthorizeAccountAccess, transactionRoutes);
+app.use('/api/transactions', mockAuthTokenMiddleware, mockAuthorizeAccountAccess, transactionRoutes);
 
 // Define mock data
 const mockTransactions = [
@@ -41,7 +41,7 @@ describe('Transaction Controller', () => {
     (deposit as jest.Mock).mockResolvedValue({ transactionId: 1, amount: 100 });
 
     const response = await request(app)
-      .post('/transactions/deposit')
+      .post('/api/transactions/deposit')
       .send({ accountId: 1, amount: 100 })
       .expect(200);
 
@@ -53,7 +53,7 @@ describe('Transaction Controller', () => {
     (withdraw as jest.Mock).mockResolvedValue({ transactionId: 1, amount: 100 });
 
     const response = await request(app)
-      .post('/transactions/withdraw')
+      .post('/api/transactions/withdraw')
       .send({ accountId: 1, amount: 100 })
       .expect(200);
 
@@ -68,7 +68,7 @@ describe('Transaction Controller', () => {
     });
 
     const response = await request(app)
-      .post('/transactions/transfer')
+      .post('/api/transactions/transfer')
       .send({ fromAccountId: 1, toAccountId: 2, amount: 100 })
       .expect(200);
 

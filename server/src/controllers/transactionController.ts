@@ -50,7 +50,7 @@ export async function fetchTransactionsController(req: Request, res: Response) {
   const { accountId } = req.params;
 
   try {
-    const transactions = await fetchTransactionsByAccountId(parseInt(accountId, 10));
+    const transactions = await fetchTransactionsByAccountId(Number(accountId));
     res.status(200).json(transactions);
   } catch (error: any) {
     console.error('Fetch transactions error:', error);

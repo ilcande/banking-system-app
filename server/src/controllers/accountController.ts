@@ -47,7 +47,7 @@ export async function updateAccountController(req: Request, res: Response): Prom
     const { type, balance } = req.body;
 
     const updateParams: UpdateAccountParams = {
-      accountId: parseInt(id, 10),
+      accountId: Number(id),
       type: type !== undefined ? type : undefined,
       balance: balance !== undefined ? balance : undefined,
     };

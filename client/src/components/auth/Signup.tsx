@@ -15,7 +15,7 @@ const Signup: React.FC = () => {
     e.preventDefault();
     console.log('API Endpoint URL:', process.env.REACT_APP_API_ENTRYPOINT_URL);
     try {
-      await axios.post('http://localhost:4242/auth/register', {
+      await axios.post('http://localhost:4242/api/auth/register', {
         username,
         email,
         password,

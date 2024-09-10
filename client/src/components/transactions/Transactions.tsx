@@ -23,7 +23,7 @@ const Transactions: React.FC = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `http://localhost:4242/transactions/accounts/${accountId}/statement/${month}/${year}`,
+        `http://localhost:4242/api/transactions/accounts/${accountId}/statement/${month}/${year}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ const Transactions: React.FC = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:4242/transactions/accounts/${accountId}/all`,
+          `http://localhost:4242/api/transactions/accounts/${accountId}/all`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

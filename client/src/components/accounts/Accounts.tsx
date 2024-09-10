@@ -31,7 +31,7 @@ const Accounts: React.FC = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:4242/accounts', {
+        const response = await axios.get('http://localhost:4242/api/accounts', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -54,7 +54,7 @@ const Accounts: React.FC = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:4242/accounts/${accountId}`, {
+      await axios.delete(`http://localhost:4242/api/accounts/${accountId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -10,8 +10,8 @@ const app = express();
 app.use(bodyParser.json());
 
 // Define routes
-app.post('/auth/register', registerController);
-app.post('/auth/login', loginController);
+app.post('/api/auth/register', registerController);
+app.post('/api/auth/login', loginController);
 
 // Mock service and model imports
 jest.mock('../services/authServices');
@@ -25,7 +25,7 @@ describe('Auth Controller', () => {
   test('should register a new user', async () => {
     (register as jest.Mock).mockResolvedValue(undefined);
     const response = await request(app)
-      .post('/auth/register')
+      .post('/api/auth/register')
       .send({ username: 'testuser', email: 'test@example.com', password: 'password123' })
       .expect(201);
 
@@ -35,7 +35,7 @@ describe('Auth Controller', () => {
   test('should login and return a token', async () => {
     (login as jest.Mock).mockResolvedValue('fake-jwt-token');
     const response = await request(app)
-      .post('/auth/login')
+      .post('/api/auth/login')
       .send({ email: 'test@example.com', password: 'password123' })
       .expect(200);
 

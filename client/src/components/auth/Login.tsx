@@ -12,7 +12,7 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4242/auth/login', { email, password });
+      const response = await axios.post('http://localhost:4242/api/auth/login', { email, password });
       localStorage.setItem('token', response.data.token);
       toast.success('Login successful!'); // Show success toast message
       navigate('/dashboard'); // Redirect to dashboard

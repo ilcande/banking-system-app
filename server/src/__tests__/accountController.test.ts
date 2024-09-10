@@ -16,12 +16,12 @@ const mockAuthTokenMiddleware = (req: express.Request, res: express.Response, ne
 };
 
 // Use the mock middleware
-app.use('/accounts', mockAuthTokenMiddleware);
-app.post('/accounts/new', registerAccountController);
-app.get('/accounts/:id', fetchAccountController);
-app.patch('/accounts/:id', updateAccountController);
-app.delete('/accounts/:id', deleteAccountController);
-app.get('/accounts', fetchAccountsController);
+app.use('/api/accounts', mockAuthTokenMiddleware);
+app.post('/api/accounts/new', registerAccountController);
+app.get('/api/accounts/:id', fetchAccountController);
+app.patch('/api/accounts/:id', updateAccountController);
+app.delete('/api/accounts/:id', deleteAccountController);
+app.get('/api/accounts', fetchAccountsController);
 
 // Mock service and model imports
 jest.mock('../services/accountServices');
@@ -35,7 +35,7 @@ describe('Account Controller', () => {
   test('should register a new account', async () => {
     (registerAccountService as jest.Mock).mockResolvedValue({ accountId: 1 });
     const response = await request(app)
-      .post('/accounts/new')
+      .post('/api/accounts/new')
       .send({ type: 'Savings', balance: 1000, currency: 'EUR' })
       .expect(201);
 
@@ -45,7 +45,7 @@ describe('Account Controller', () => {
   test('should fetch an account', async () => {
     (findAccountById as jest.Mock).mockResolvedValue({ accountId: 1, type: 'Savings', balance: 1000, currency: 'EUR' });
     const response = await request(app)
-      .get('/accounts/1')
+      .get('/api/accounts/1')
       .expect(200);
 
     expect(response.body.accountId).toBe(1);
@@ -54,7 +54,7 @@ describe('Account Controller', () => {
   test('should update an account', async () => {
     (updateAccountService as jest.Mock).mockResolvedValue(null);
     const response = await request(app)
-      .patch('/accounts/1')
+      .patch('/api/accounts/1')
       .send({ balance: 1500 })
       .expect(200);
 
@@ -64,7 +64,7 @@ describe('Account Controller', () => {
   test('should delete an account', async () => {
     (deleteAccountService as jest.Mock).mockResolvedValue(null);
     const response = await request(app)
-      .delete('/accounts/1')
+      .delete('/api/accounts/1')
       .expect(200);
 
     expect(response.body.message).toBe('Account 1 deleted successfully');
@@ -73,7 +73,7 @@ describe('Account Controller', () => {
   test('should fetch all accounts for a user', async () => {
     (findAccountsByUserId as jest.Mock).mockResolvedValue([{ accountId: 1, type: 'Savings', balance: 1000, currency: 'EUR' }]);
     const response = await request(app)
-      .get('/accounts')
+      .get('/api/accounts')
       .expect(200);
 
     expect(response.body.length).toBe(1);

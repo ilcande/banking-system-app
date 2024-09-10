@@ -45,7 +45,7 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({
     try {
       if (isEditing && accountToEdit) {
         await axios.patch(
-          `http://localhost:4242/accounts/${accountToEdit.account_id}`,
+          `http://localhost:4242/api/accounts/${accountToEdit.account_id}`,
           { type, balance },
           {
             headers: {
@@ -58,7 +58,7 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({
         navigate(`/accounts/${accountToEdit.account_id}`);
       } else {
         const response = await axios.post(
-          'http://localhost:4242/accounts/new',
+          'http://localhost:4242/api/accounts/new',
           { type, balance, currency: 'EUR' },
           {
             headers: {
