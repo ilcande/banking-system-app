@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "incremental": true,
+    "noUncheckedIndexedAccess": true,
     "target": "ES6",
     "module": "commonjs",
     "strict": true,
