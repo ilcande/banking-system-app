@@ -22,10 +22,11 @@ client/coverage/
 
 # Server
 
-server/node_modules/
-server/dist/
-server/.env
-server/coverage/
+/server/node_modules/
+/server/dist/
+/server/.env
+/server/coverage/
+/server/.DS_Store
 
 # Miscellaneous
 
@@ -34,3 +35,4 @@ server/coverage/
 *.cache
 *.tmp
 “ > .gitignore
+vercel.json
