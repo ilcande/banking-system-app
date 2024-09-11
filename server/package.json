@@ -8,7 +8,7 @@
     "dev": "nodemon src/server.ts",
     "test": "jest",
     "migrate": "node-pg-migrate -f migration-config.js -j ts",
-    "postinstall": "tsc"
+    "postinstall": "npm --prefix ../client install && npm --prefix ../client run build"
   },
   "keywords": [],
   "author": "",
