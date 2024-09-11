@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'; // Import cors middleware
 
@@ -35,7 +35,7 @@ app.use('/api/accounts', accountRoutes);
 app.use('/api/transactions', transactionRoutes);
 
 // Define other routes, e.g., home route
-app.get('/', (_req, res) => {
+app.get('/', (_req: Request, res: Response) => {
   res.send('Secure, reliable, and easy-to-use banking system.');
 });
 
@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
-app.get('*', (_req, res) => {
+app.get('*', (_req: Request, res: Response) => {
   res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
 });
 
