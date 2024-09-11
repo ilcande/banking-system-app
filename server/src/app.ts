@@ -39,14 +39,14 @@ app.get('/', (_req, res) => {
   res.send('Secure, reliable, and easy-to-use banking system.');
 });
 
+import path from 'path';
 // Serve static files from the React app
-app.use(express.static('../client/build'));
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
-import path from 'path';
 app.get('*', (_req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
 });
 
 export default app;

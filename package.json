@@ -2,9 +2,7 @@
   "name": "banking-system",
   "version": "1.0.0",
   "scripts": {
-    "start": "npm --prefix server start",
-    "heroku-postbuild": "npm --prefix client install && npm --prefix client run build"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+    "start": "npm --prefix server run start",
+    "heroku-postbuild": "npm --prefix client install && npm --prefix client run build && npm --prefix server install"
+  }
 }
