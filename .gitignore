@@ -35,4 +35,4 @@ client/coverage/
 *.cache
 *.tmp
 “ > .gitignore
-vercel.json
+Procfile

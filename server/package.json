@@ -7,7 +7,8 @@
     "start": "ts-node src/server.ts",
     "dev": "nodemon src/server.ts",
     "test": "jest",
-    "migrate": "node-pg-migrate -f migration-config.js -j ts"
+    "migrate": "node-pg-migrate -f migration-config.js -j ts",
+    "postinstall": "tsc"
   },
   "keywords": [],
   "author": "",
