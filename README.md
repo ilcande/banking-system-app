@@ -1,4 +1,4 @@
-# Banking System
+# Banking System Application
 
 The banking system aims to provide core banking functionalities, including account creation, transactions, and statement generation. It serves as a foundation for a comprehensive banking application.
 
