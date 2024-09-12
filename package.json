@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "scripts": {
     "start": "npm --prefix server run start",
-    "heroku-postbuild": "npm --prefix client install && npm --prefix client run build && npm --prefix server install"
+    "heroku-postbuild": "npm --prefix client install && npm --prefix client run build && npm --prefix server install && npm --prefix server run build"
   }
 }
