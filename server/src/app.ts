@@ -1,4 +1,5 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'; // Import cors middleware
 
@@ -19,7 +20,7 @@ client.connect((err: Error) => {
   }
 });
 
-const app = express();
+const app = express(); // Create Express app
 
 // Middleware
 app.use(cors()); // Enable CORS
