@@ -5,11 +5,12 @@
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
+    "start": "node ./dist/server.js",
     "dev": "nodemon src/server.ts",
     "test": "jest",
     "migrate": "node-pg-migrate -f migration-config.js -j ts",
-    "heroku-postbuild": "npm run build && npm --prefix ../client install && npm --prefix ../client run build"
+    "heroku-postbuild": "npm run build",
+    "postinstall": "npm run build && npm --prefix ../client install && npm --prefix ../client run build"
   },
   "keywords": [],
   "author": "",
