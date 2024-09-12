@@ -1,5 +1,6 @@
 import request from 'supertest';
 import express from 'express';
+import { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import { registerAccountController, fetchAccountController, updateAccountController, deleteAccountController, fetchAccountsController } from '../controllers/accountController';
 import { registerAccountService, updateAccountService, deleteAccountService } from '../services/accountServices';
@@ -10,7 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Mock authTokenMiddleware
-const mockAuthTokenMiddleware = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+const mockAuthTokenMiddleware = (req: Request, _res: Response, next: any) => {
   (req as any).user = { userId: 1 }; // Simulate authenticated user
   next();
 };

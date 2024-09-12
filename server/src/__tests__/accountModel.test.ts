@@ -1,4 +1,3 @@
-// __tests__/accountModel.test.ts
 import { createAccount, updateAccount, deleteAccount, findAccountById, findAccountsByUserId, updateAccountBalanceInDB } from '../models/accountModel';
 const client = require('../config/database');
 // Mock the client.query method
